@@ -1,0 +1,343 @@
+<html><head><base href="/" />
+<title>Login | Elegant Portal</title>
+<style>
+:root {
+  --primary: #2a4365;
+  --secondary: #4299e1;
+  --accent: #90cdf4;
+  --background: #f7fafc;
+  --digital-color: #39ff14;
+  --digital-yellow: #ffff00;
+  --digital-green: #00ff41; /* Added digital green color */
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #1a1a1a;
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.digital-garden {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+.bubble {
+  fill: none;
+  stroke: var(--digital-green); /* Updated to use digital green */
+  stroke-width: 2;
+  opacity: 0.2;
+  animation: bubbleFloat 8s infinite;
+}
+
+@keyframes bubbleFloat {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 0.2;
+  }
+  50% {
+    transform: translateY(-200px) scale(1.2);
+    opacity: 0.4;
+  }
+  100% {
+    transform: translateY(-400px) scale(0.8);
+    opacity: 0;
+  }
+}
+
+.flower {
+  transform-origin: center;
+  animation: flowerGlow 3s ease-in-out infinite;
+}
+
+@keyframes flowerGlow {
+  0% { 
+    filter: drop-shadow(0 0 2px var(--digital-green)); /* Updated to use digital green */
+    transform: rotate(0deg);
+  }
+  50% { 
+    filter: drop-shadow(0 0 8px var(--digital-green)); /* Updated to use digital green */
+    transform: rotate(5deg);
+  }
+  100% { 
+    filter: drop-shadow(0 0 2px var(--digital-green)); /* Updated to use digital green */
+    transform: rotate(0deg);
+  }
+}
+
+.login-container {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 2.5rem;
+  border-radius: 1rem;
+  box-shadow: 0 4px 20px rgba(0, 255, 65, 0.2); /* Updated to use digital green */
+  width: 100%;
+  max-width: 400px;
+  position: relative;
+  overflow: hidden;
+}
+
+.login-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.login-header svg {
+  width: 64px;
+  height: 64px;
+  margin-bottom: 1rem;
+  stroke: var(--digital-green); /* Updated to use digital green */
+}
+
+h1 {
+  color: var(--primary);
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 0 5px var(--digital-green); /* Updated to use digital green */
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--primary);
+  font-weight: 500;
+}
+
+input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  transition: all 0.2s;
+}
+
+input:focus {
+  outline: none;
+  border-color: var(--digital-green); /* Updated to use digital green */
+  box-shadow: 0 0 10px var(--digital-green); /* Updated to use digital green */
+}
+
+button {
+  width: 100%;
+  padding: 0.75rem;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+button:hover {
+  background: var(--digital-green); /* Updated to use digital green */
+  box-shadow: 0 0 15px var(--digital-green); /* Updated to use digital green */
+}
+
+.links {
+  margin-top: 1.5rem;
+  text-align: center;
+}
+
+.links a {
+  color: var(--secondary);
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: color 0.2s;
+}
+
+.links a:hover {
+  color: var(--digital-green); /* Updated to use digital green */
+  text-shadow: 0 0 5px var(--digital-green); /* Updated to use digital green */
+}
+
+.loading {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.9);
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid var(--accent);
+  border-top-color: var(--digital-green); /* Updated to use digital green */
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.error-message {
+  color: #e53e3e;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+  display: none;
+}
+</style>
+</head>
+<body>
+
+<svg class="digital-garden" viewBox="0 0 1000 1000" xmlns="http://www.w3.org/2000/svg">
+  <!-- Digital Bubbles -->
+  <circle class="bubble" cx="100" cy="900" r="20" style="animation-delay: -1s"/>
+  <circle class="bubble" cx="300" cy="950" r="15" style="animation-delay: -2s"/>
+  <circle class="bubble" cx="500" cy="920" r="25" style="animation-delay: -3s"/>
+  <circle class="bubble" cx="700" cy="880" r="18" style="animation-delay: -4s"/>
+  <circle class="bubble" cx="900" cy="900" r="22" style="animation-delay: -5s"/>
+  <circle class="bubble" cx="200" cy="850" r="20" style="animation-delay: -6s"/>
+  <circle class="bubble" cx="400" cy="900" r="15" style="animation-delay: -7s"/>
+  <circle class="bubble" cx="600" cy="950" r="25" style="animation-delay: -8s"/>
+  <circle class="bubble" cx="800" cy="880" r="18" style="animation-delay: -9s"/>
+  
+  <!-- Digital Flowers -->
+  <g class="flower" style="animation-delay: -1s">
+    <path class="flower-stem" d="M100,1000 C100,800 100,700 200,600" stroke="var(--digital-green)" fill="none"/>
+    <circle class="flower-petals" cx="200" cy="600" r="30" fill="var(--digital-green)" opacity="0.5"/>
+    <circle class="flower-petals" cx="170" cy="580" r="30" fill="var(--digital-green)" opacity="0.5"/>
+    <circle class="flower-petals" cx="230" cy="580" r="30" fill="var(--digital-green)" opacity="0.5"/>
+    <circle class="flower-petals" cx="200" cy="560" r="30" fill="var(--digital-green)" opacity="0.5"/>
+  </g>
+  
+  <g class="flower" style="animation-delay: -2s">
+    <path class="flower-stem" d="M300,1000 C300,850 300,750 400,650" stroke="var(--digital-green)" fill="none"/>
+    <circle class="flower-petals" cx="400" cy="650" r="40" fill="var(--digital-green)" opacity="0.5"/>
+    <circle class="flower-petals" cx="360" cy="630" r="40" fill="var(--digital-green)" opacity="0.5"/>
+    <circle class="flower-petals" cx="440" cy="630" r="40" fill="var(--digital-green)" opacity="0.5"/>
+    <circle class="flower-petals" cx="400" cy="610" r="40" fill="var(--digital-green)" opacity="0.5"/>
+  </g>
+  
+  <g class="flower" style="animation-delay: -0.5s">
+    <path class="flower-stem" d="M700,1000 C700,900 700,800 600,700" stroke="var(--digital-green)" fill="none"/>
+    <circle class="flower-petals" cx="600" cy="700" r="35" fill="var(--digital-green)" opacity="0.5"/>
+    <circle class="flower-petals" cx="565" cy="680" r="35" fill="var(--digital-green)" opacity="0.5"/>
+    <circle class="flower-petals" cx="635" cy="680" r="35" fill="var(--digital-green)" opacity="0.5"/>
+    <circle class="flower-petals" cx="600" cy="660" r="35" fill="var(--digital-green)" opacity="0.5"/>
+  </g>
+  
+  <g class="flower" style="animation-delay: -1.5s">
+    <path class="flower-stem" d="M900,1000 C900,850 900,750 800,650" stroke="var(--digital-green)" fill="none"/>
+    <circle class="flower-petals" cx="800" cy="650" r="45" fill="var(--digital-green)" opacity="0.5"/>
+    <circle class="flower-petals" cx="755" cy="630" r="45" fill="var(--digital-green)" opacity="0.5"/>
+    <circle class="flower-petals" cx="845" cy="630" r="45" fill="var(--digital-green)" opacity="0.5"/>
+    <circle class="flower-petals" cx="800" cy="610" r="45" fill="var(--digital-green)" opacity="0.5"/>
+  </g>
+</svg>
+
+<div class="login-container">
+  <div class="login-header">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+      <circle cx="12" cy="7" r="4" />
+    </svg>
+    <h1>Welcome Back</h1>
+    <p>Please sign in to continue</p>
+  </div>
+
+  <form id="loginForm">
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" id="email" required autocomplete="email">
+      <div class="error-message" id="emailError"></div>
+    </div>
+
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input type="password" id="password" required autocomplete="current-password">
+      <div class="error-message" id="passwordError"></div>
+    </div>
+
+    <button type="submit">Sign In</button>
+  </form>
+
+  <div class="links">
+    <a href="https://example.com/forgot-password">Forgot Password?</a>
+    <span> · </span>
+    <a href="https://example.com/signup">Create Account</a>
+  </div>
+
+  <div class="loading">
+    <div class="spinner"></div>
+  </div>
+</div>
+
+<script>
+document.getElementById('loginForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  
+  const email = document.getElementById('email');
+  const password = document.getElementById('password');
+  const emailError = document.getElementById('emailError');
+  const passwordError = document.getElementById('passwordError');
+  const loading = document.querySelector('.loading');
+
+  // Reset errors
+  emailError.style.display = 'none';
+  passwordError.style.display = 'none';
+
+  // Validate email
+  if (!email.value.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)) {
+    emailError.textContent = 'Please enter a valid email address';
+    emailError.style.display = 'block';
+    return;
+  }
+
+  // Validate password
+  if (password.value.length < 6) {
+    passwordError.textContent = 'Password must be at least 6 characters';
+    passwordError.style.display = 'block';
+    return;
+  }
+
+  // Show loading spinner
+  loading.style.display = 'flex';
+
+  try {
+    // Simulate API call
+    await new Promise(resolve => setTimeout(resolve, 1500));
+    
+    // For demo purposes, always succeed
+    console.log('Login successful');
+    window.location.href = 'https://example.com/dashboard';
+  } catch (error) {
+    console.error('Login failed:', error);
+    passwordError.textContent = 'Invalid email or password';
+    passwordError.style.display = 'block';
+  } finally {
+    loading.style.display = 'none';
+  }
+});
+</script>
+
+</body></html>
